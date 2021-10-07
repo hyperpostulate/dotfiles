@@ -33,31 +33,31 @@ conky.config = {
 conky.text = [[
 #-----General System Information-----
 ${font sans-serif:bold:size=8}SYSTEM ${hr 2}
-${font sans-serif:normal:size=8}Architecture: $alignr$machine
-Kernel: $alignr Linux $kernel
-Distribution: $alignr ${execi 6000 lsb_release -d | grep 'Descr'|awk {'print $2 " " $3" " $4"" $5'}}
-Host:$alignr$nodename
-Uptime:$alignr$uptime
-System Temperature: $alignr${acpitemp} °C
+${font sans-serif:normal:size=8}Architecture: ${alignr}${machine}
+Kernel: ${alignr}Linux ${kernel}
+Distribution: ${alignr} ${execi 6000 lsb_release -d | grep 'Descr'|awk {'print $2 " " $3" " $4"" $5'}}
+Host: ${alignr}${nodename}
+Uptime: ${alignr}${uptime}
+System Temperature: ${alignr}${acpitemp} °C
 
 ${font sans-serif:bold:size=8}POWER ${hr 2}
-${font sans-serif:normal:size=8}Battery Status:$alignr ${battery BAT0}
+${font sans-serif:normal:size=8}Battery Status: ${alignr}${battery BAT0}
 ${battery_bar BAT0}
-Will be [dis]charged in:$alignr${battery_time BAT0}
+Will be [dis]charged in: ${alignr}${battery_time BAT0}
 
 #-----Processor Information-----
 ${font sans-serif:bold:size=8}PROCESSOR ${hr 2}
 #${alignc}${exec lscpu}
-CPU Utilization: ${cpu cpu0}% ${cpubar cpu0}
+CPU Utilization: ${alignr}${cpu cpu0}% ${cpubar 8,120 cpu0}
 #If you have less than 2 cores, comment them for less.
-Core \#1: ${cpu cpu1}% ${cpubar cpu1}
-Core \#2: ${cpu cpu2}% ${cpubar cpu2}
-Core \#3: ${cpu cpu3}% ${cpubar cpu3}
-Core \#4: ${cpu cpu4}% ${cpubar cpu4}
-Core \#5: ${cpu cpu5}% ${cpubar cpu5}
-Core \#6: ${cpu cpu6}% ${cpubar cpu6}
-Core \#7: ${cpu cpu7}% ${cpubar cpu7}
-Core \#8: ${cpu cpu8}% ${cpubar cpu8}
+Core \#1: ${alignr}${cpu cpu1}% ${cpubar 8,120 cpu1}
+Core \#2: ${alignr}${cpu cpu2}% ${cpubar 8,120 cpu2}
+Core \#3: ${alignr}${cpu cpu3}% ${cpubar 8,120 cpu3}
+Core \#4: ${alignr}${cpu cpu4}% ${cpubar 8,120 cpu4}
+Core \#5: ${alignr}${cpu cpu5}% ${cpubar 8,120 cpu5}
+Core \#6: ${alignr}${cpu cpu6}% ${cpubar 8,120 cpu6}
+Core \#7: ${alignr}${cpu cpu7}% ${cpubar 8,120 cpu7}
+Core \#8: ${alignr}${cpu cpu8}% ${cpubar 8,120 cpu8}
 ${font sans-serif:normal:size=8}CPU Frequency: ${alignr} ${freq} MHz
 Load Average: ${alignr} ${loadavg}
 Total Process Count: ${alignr} ${processes}
@@ -78,8 +78,8 @@ $font${top name 10}${alignr}${top cpu 10} %
 
 #-----Memory Information-----
 ${font sans-serif:bold:size=8}MEMORY ${hr 2}
-RAM Utilization: $memperc% $membar${font sans-serif:normal:size=8}
-Memory in Use: ${alignr}${mem}
+RAM Utilization: ${alignr}${memperc}% ${membar 8,120}
+${font sans-serif:normal:size=8}Memory in Use: ${alignr}${mem}
 Buffered Memory: ${alignr}${buffers}
 Cached Memory: ${alignr}${cached}
 Free Memory: ${alignr}${memfree}
@@ -100,9 +100,9 @@ $font${top_mem name 10}${alignr}${top mem 10} %
 #-----Hard Drive Information-----
 ${font sans-serif:bold:size=8}STORAGE ${hr 2}
 / $alignr ${fs_used /} / ${fs_size /}
-${font sans-serif:normal:size=8}${fs_used_perc /}% ${fs_bar /}
-Disk I/O Read: ${alignr}${diskio_read}
-Disk I/O Write: ${alignr}${diskio_write}
+${font sans-serif:normal:size=8}Usage: ${alignr}${fs_used_perc /}% ${fs_bar 8,120 /}
+Disk I/O Read: ${alignr}${diskio_read} ${diskiograph_read 8,120}
+Disk I/O Write: ${alignr}${diskio_write} ${diskiograph_write 8,120}
 
 #-----Network Information-----
 ${font sans-serif:bold:size=8}NETWORK ${hr 2}
@@ -110,11 +110,11 @@ ${font sans-serif:bold:size=8}NETWORK ${hr 2}
 ${if_existing /proc/net/route wlo1}${font sans-serif:bold:size=8}Connection: $alignr WLAN
 ${font sans-serif:normal:size=8}IP address: $alignr ${addr wlo1}
 ESSID: $alignr ${wireless_essid wlo1}
-AP's MAC Addr.: ${alignr}${wireless_ap wlo1}
+AP's MAC Address: ${alignr}${wireless_ap wlo1}
 Wireless Bitrate: ${alignr}${wireless_bitrate wlo1}
-Signal Quality: ${wireless_link_qual wlo1}% ${alignr}${wireless_link_bar 8,60 wlo1}
-UL Speed: ${upspeed wlo1}/s ${alignr}${upspeedgraph wlo1 8,60}
-DL Speed: ${downspeed wlo1}/s ${alignr}${downspeedgraph wlo1 8,60}
+Signal Quality: ${alignr}${wireless_link_qual wlo1}% ${wireless_link_bar 8,120 wlo1}
+UL Speed: ${alignr}${upspeed wlo1}/s ${upspeedgraph wlo1 8,120}
+DL Speed: ${alignr}${downspeed wlo1}/s ${downspeedgraph wlo1 8,120}
 Total Upload: ${alignr}${totalup wlo1}
 Total Download: ${alignr}${totaldown wlo1}${endif}
 
@@ -123,8 +123,8 @@ Total Download: ${alignr}${totaldown wlo1}${endif}
 #Wireless device: wlo1 change with yours
 ${if_existing /proc/net/route enp3s0}${font sans-serif:bold:size=8}Connection: $alignr Ethernet
 ${font sans-serif:normal:size=8}IP address: $alignr ${addr enp3s0}
-UL Speed: ${upspeed enp3s0}/s ${alignr}${upspeedgraph enp3s0 8,60}
-DL Speed: ${downspeed enp3s0}/s ${alignr}${downspeedgraph enp3s0 8,60}
+UL Speed: ${alignr}${upspeedgraph enp3s0 8,120} ${upspeed enp3s0}/s
+DL Speed: ${alignr}${downspeedgraph enp3s0 8,120}${downspeed enp3s0}/s
 Total Upload: ${alignr}${totalup enp3s0}
 Total Download: ${alignr}${totaldown enp3s0}${endif}
 #-----End of the script. Written by hyperpostulate.-----
