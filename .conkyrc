@@ -17,7 +17,7 @@ conky.config = {
 	own_window_type = 'override',
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 	double_buffer = true,
-	minimum_width = 250,
+	minimum_width = 250, 
 	minimum_height = 250,
 	maximum_width = 250,
 	draw_shades = false,
@@ -52,14 +52,14 @@ ${font sans-serif:bold:size=8}PROCESSOR ${hr 2}
 ${font}CPU: ${alignr}${execi 6000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-27}
 CPU Utilization: ${alignr}${cpu cpu0}% ${cpubar 8,120 cpu0}
 #If you have less than 2 cores, comment them for less.
-Core \#1: ${alignr}${cpu cpu1}% ${cpubar 8,120 cpu1}
-Core \#2: ${alignr}${cpu cpu2}% ${cpubar 8,120 cpu2}
-Core \#3: ${alignr}${cpu cpu3}% ${cpubar 8,120 cpu3}
-Core \#4: ${alignr}${cpu cpu4}% ${cpubar 8,120 cpu4}
-Core \#5: ${alignr}${cpu cpu5}% ${cpubar 8,120 cpu5}
-Core \#6: ${alignr}${cpu cpu6}% ${cpubar 8,120 cpu6}
-Core \#7: ${alignr}${cpu cpu7}% ${cpubar 8,120 cpu7}
-Core \#8: ${alignr}${cpu cpu8}% ${cpubar 8,120 cpu8}
+Core \#1: ${alignr}${cpu cpu1}% ${cpubar cpu1 8,120}
+Core \#2: ${alignr}${cpu cpu2}% ${cpubar cpu2 8,120}
+Core \#3: ${alignr}${cpu cpu3}% ${cpubar cpu3 8,120}
+Core \#4: ${alignr}${cpu cpu4}% ${cpubar cpu4 8,120}
+Core \#5: ${alignr}${cpu cpu5}% ${cpubar cpu5 8,120}
+Core \#6: ${alignr}${cpu cpu6}% ${cpubar cpu6 8,120}
+Core \#7: ${alignr}${cpu cpu7}% ${cpubar cpu7 8,120}
+Core \#8: ${alignr}${cpu cpu8}% ${cpubar cpu8 8,120}
 CPU Frequency: ${alignr} ${freq} MHz
 Load Average: ${alignr} ${loadavg}
 Total Process Count: ${alignr} ${processes}
