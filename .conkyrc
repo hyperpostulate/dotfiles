@@ -107,6 +107,7 @@ Disk I/O Write: ${alignr}${diskio_write} ${diskiograph_write 8,120}
 #-----Network Information-----
 ${font sans-serif:bold:size=8}NETWORK ${hr 2}
 #-----Detect WLAN Connectivity-----
+#Wireless device: wlo1 and wlx6c60eb667cc7. change with yours
 ${if_existing /proc/net/route wlo1}${font}Connection: $alignr WLAN
 IP address: $alignr ${addr wlo1}
 ESSID: $alignr ${wireless_essid wlo1}
@@ -117,10 +118,19 @@ UL Speed: ${alignr}${upspeed wlo1}/s ${upspeedgraph wlo1 8,120}
 DL Speed: ${alignr}${downspeed wlo1}/s ${downspeedgraph wlo1 8,120}
 Total Upload: ${alignr}${totalup wlo1}
 Total Download: ${alignr}${totaldown wlo1}${endif}
+${if_existing /proc/net/route wlx6c60eb667cc7}${font}Connection: $alignr WLAN
+IP address: $alignr ${addr wlx6c60eb667cc7}
+ESSID: $alignr ${wireless_essid wlx6c60eb667cc7}
+AP's MAC Address: ${alignr}${wireless_ap wlx6c60eb667cc7}
+Wireless Bitrate: ${alignr}${wireless_bitrate wlx6c60eb667cc7}
+Signal Quality: ${alignr}${wireless_link_qual wlx6c60eb667cc7}% ${wireless_link_bar 8,120 wlx6c60eb667cc7}
+UL Speed: ${alignr}${upspeed wlx6c60eb667cc7}/s ${upspeedgraph wlx6c60eb667cc7 8,120}
+DL Speed: ${alignr}${downspeed wlx6c60eb667cc7}/s ${downspeedgraph wlx6c60eb667cc7 8,120}
+Total Upload: ${alignr}${totalup wlx6c60eb667cc7}
+Total Download: ${alignr}${totaldown wlx6c60eb667cc7}${endif}
 
 #-----Detect Ethernet Connectivity-----
 #Ethernet device: enp3s0 change with yours
-#Wireless device: wlo1 change with yours
 ${if_existing /proc/net/route enp3s0}${font}Connection: $alignr Ethernet
 IP address: $alignr ${addr enp3s0}
 UL Speed: ${alignr}${upspeedgraph enp3s0 8,120} ${upspeed enp3s0}/s
