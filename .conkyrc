@@ -17,9 +17,9 @@ conky.config = {
 	own_window_type = 'override',
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 	double_buffer = true,
-	minimum_width = 250, 
+	minimum_width = 275, 
 	minimum_height = 250,
-	maximum_width = 250,
+	maximum_width = 275,
 	draw_shades = false,
 	draw_outline = false,
 	draw_borders = false,
@@ -28,7 +28,7 @@ conky.config = {
 	default_outline_color = 'white',
 	alignment = 'top_right',
 	gap_x = 12,
-	gap_y = 42,
+	gap_y = 36,
 };
 
 conky.text = [[
@@ -40,10 +40,7 @@ Distribution: ${alignr} ${execi 6000 lsb_release -d | grep 'Descr'|awk {'print $
 Host: ${alignr}${nodename}
 Uptime: ${alignr}${uptime}
 System Temperature: ${alignr}${acpitemp} °C
-
-#-----Power Information-----
-${font sans-serif:bold:size=8}POWER ${hr 2}
-${font}Battery Status: ${alignr}${battery BAT0}
+Battery Status: ${alignr}${battery BAT0}
 ${battery_bar BAT0}
 Will be [dis]charged in: ${alignr}${battery_time BAT0}
 
@@ -110,22 +107,30 @@ ${font sans-serif:bold:size=8}NETWORK ${hr 2}
 #Wireless device: wlo1 and wlx6c60eb667cc7. Change with yours
 ${if_existing /proc/net/route wlo1}${font}Connection: $alignr WLAN
 WLAN Device: $alignr wlo1
-IP address: $alignr ${addr wlo1}
+Local IP: $alignr ${addr wlo1}
 ESSID: $alignr ${wireless_essid wlo1}
 AP's MAC Address: ${alignr}${wireless_ap wlo1}
 Wireless Bitrate: ${alignr}${wireless_bitrate wlo1}
 Signal Quality: ${alignr}${wireless_link_qual wlo1}% ${wireless_link_bar 8,120 wlo1}
+Connections: $alignr Inbound:${tcp_portmon 1 32767 count}, Outbound:${tcp_portmon 32768 61000 count}, Total:${tcp_portmon 1 65535 count}
+Public IP: $alignr ${execi 600 wget http://ipinfo.io/ip -qO -}
+ISP: $alignr ${execi 6000 curl ipinfo.io/org}
+Locale: $alignr ${execi 6000 curl ipinfo.io/city}, ${execi 6000 curl ipinfo.io/region}, ${execi 6000 curl ipinfo.io/country}
 UL Speed: ${alignr}${upspeed wlo1}/s ${upspeedgraph wlo1 8,120}
 DL Speed: ${alignr}${downspeed wlo1}/s ${downspeedgraph wlo1 8,120}
 Total Upload: ${alignr}${totalup wlo1}
 Total Download: ${alignr}${totaldown wlo1}${endif}
 ${if_existing /proc/net/route wlx6c60eb667cc7}${font}Connection: $alignr WLAN
 WLAN Device: $alignr wlx6c60eb667cc7
-IP address: $alignr ${addr wlx6c60eb667cc7}
+Local IP: $alignr ${addr wlx6c60eb667cc7}
 ESSID: $alignr ${wireless_essid wlx6c60eb667cc7}
 AP's MAC Address: ${alignr}${wireless_ap wlx6c60eb667cc7}
 Wireless Bitrate: ${alignr}${wireless_bitrate wlx6c60eb667cc7}
 Signal Quality: ${alignr}${wireless_link_qual wlx6c60eb667cc7}% ${wireless_link_bar 8,120 wlx6c60eb667cc7}
+Connections: $alignr Inbound:${tcp_portmon 1 32767 count}, Outbound:${tcp_portmon 32768 61000 count}, Total:${tcp_portmon 1 65535 count}
+Public IP: $alignr ${execi 600 wget http://ipinfo.io/ip -qO -}
+ISP: $alignr ${execi 6000 curl ipinfo.io/org}
+Locale: $alignr ${execi 6000 curl ipinfo.io/city}, ${execi 6000 curl ipinfo.io/region}, ${execi 6000 curl ipinfo.io/country}
 UL Speed: ${alignr}${upspeed wlx6c60eb667cc7}/s ${upspeedgraph wlx6c60eb667cc7 8,120}
 DL Speed: ${alignr}${downspeed wlx6c60eb667cc7}/s ${downspeedgraph wlx6c60eb667cc7 8,120}
 Total Upload: ${alignr}${totalup wlx6c60eb667cc7}
@@ -135,7 +140,11 @@ Total Download: ${alignr}${totaldown wlx6c60eb667cc7}${endif}
 #Ethernet device: enp3s0. Change with yours
 ${if_existing /proc/net/route enp3s0}${font}Connection: $alignr Ethernet
 Ethernet Device: $alignr enp3s0
-IP address: $alignr ${addr enp3s0}
+Local IP: $alignr ${addr enp3s0}
+Connections: $alignr Inbound:${tcp_portmon 1 32767 count}, Outbound:${tcp_portmon 32768 61000 count}, Total:${tcp_portmon 1 65535 count}
+Public IP: $alignr ${execi 600 wget http://ipinfo.io/ip -qO -}
+ISP: $alignr ${execi 6000 curl ipinfo.io/org}
+Locale: $alignr ${execi 6000 curl ipinfo.io/city}, ${execi 6000 curl ipinfo.io/region}, ${execi 6000 curl ipinfo.io/country}
 UL Speed: ${alignr}${upspeedgraph enp3s0 8,120} ${upspeed enp3s0}/s
 DL Speed: ${alignr}${downspeedgraph enp3s0 8,120}${downspeed enp3s0}/s
 Total Upload: ${alignr}${totalup enp3s0}
