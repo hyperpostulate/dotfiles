@@ -102,7 +102,7 @@ ${font}GPU: ${alignr}${execi 6000 nvidia-smi --query-gpu=gpu_name --format=csv,n
 Driver: ${alignr}${execi 6000 nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits}
 GPU Utilization: ${alignr}${exec nvidia-smi -i 0 | grep % | cut -c 61-63} %
 VRAM Utilization: ${alignr}${exec nvidia-smi -i 0| grep % | cut -c 37-40} MB
-GPU Temperature: ${alignr}${nvidia temp}°C
+GPU Temperature: ${alignr}${execi 60 nvidia-settings -query [gpu:0]/GPUCoreTemp -t}°C
 
 #-----Network Information-----
 ${font sans-serif:bold:size=8}NETWORK ${hr 2}
