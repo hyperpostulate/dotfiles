@@ -1,16 +1,13 @@
 conky.config = {
--------Conky Process Configuration-----
 	background = true,
 	update_interval = 1.0,
 	total_run_times = 0,
 	cpu_avg_samples = 2,
 	diskio_avg_samples = 2,
 	net_avg_samples = 2,
--------Font Configuration-----
 	use_xft = true,
 	font = 'Sans:size=8',
 	xftalpha = 1,
--------Window Configuration-----
 	own_window = true,
 	own_window_transparent = false,
 	own_window_colour = '#1E282C',
@@ -27,7 +24,7 @@ conky.config = {
 	default_shade_color = 'black',
 	default_outline_color = 'white',
 	alignment = 'top_right',
-	gap_x = 12,
+	gap_x = 6,
 	gap_y = 36,
 };
 
@@ -36,7 +33,7 @@ conky.text = [[
 ${font sans-serif:bold:size=8}SYSTEM ${hr 2}
 ${font}Architecture: ${alignr}${machine}
 Kernel: ${alignr}Linux ${kernel}
-Distribution: ${alignr} ${execi 6000 lsb_release -d | grep 'Descr'|awk {'print $2 " " $3" " $4"" $5'}}
+Distribution: ${alignr}${execi 6000 lsb_release -d | grep 'Descr'|awk {'print $2 " " $3" " $4"" $5'}}
 Host: ${alignr}${nodename}
 Uptime: ${alignr}${uptime}
 System Temperature: ${alignr}${acpitemp} °C
@@ -57,11 +54,11 @@ Core \#5: ${alignr}${cpu cpu5}% ${cpubar cpu5 8,120}
 Core \#6: ${alignr}${cpu cpu6}% ${cpubar cpu6 8,120}
 Core \#7: ${alignr}${cpu cpu7}% ${cpubar cpu7 8,120}
 Core \#8: ${alignr}${cpu cpu8}% ${cpubar cpu8 8,120}
-CPU Frequency: ${alignr} ${freq} MHz
-Load Average: ${alignr} ${loadavg}
-Total Process Count: ${alignr} ${processes}
-Running Process Count: ${alignr} ${running_processes}
-Running Thread Count: ${alignr} ${running_threads}
+CPU Frequency: ${alignr}${freq} MHz
+Load Average: ${alignr}${loadavg}
+Total Process Count: ${alignr}${processes}
+Running Process Count: ${alignr}${running_processes}
+Running Thread Count: ${alignr}${running_threads}
 
 ${font sans-serif:bold:size=8}TOP 5 CPU PROCESSES ${hr 2}
 ${font}${top name 1}${alignr}${top cpu 1} %
@@ -86,13 +83,6 @@ $font${top_mem name 3}${alignr}${top mem 3} %
 $font${top_mem name 4}${alignr}${top mem 4} %
 $font${top_mem name 5}${alignr}${top mem 5} %
 
-#-----Hard Drive Information-----
-${font sans-serif:bold:size=8}STORAGE ${hr 2}
-${font}/ $alignr ${fs_used /} / ${fs_size /}
-Usage: ${alignr}${fs_used_perc /}% ${fs_bar 8,120 /}
-Disk I/O Read: ${alignr}${diskio_read} ${diskiograph_read 8,120}
-Disk I/O Write: ${alignr}${diskio_write} ${diskiograph_write 8,120}
-
 #-----Graphics Information-----
 ${font sans-serif:bold:size=8}GRAPHICS ${hr 2}
 ${font}GPU: ${alignr}${execi 6000 nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits}
@@ -101,53 +91,43 @@ GPU Utilization: ${alignr}${exec nvidia-smi -i 0 | grep % | cut -c 61-63} %
 VRAM Utilization: ${alignr}${exec nvidia-smi -i 0| grep % | cut -c 37-40} MB
 GPU Temperature: ${alignr}${execi 60 nvidia-settings -query [gpu:0]/GPUCoreTemp -t}°C
 
+#-----Hard Drive Information-----
+${font sans-serif:bold:size=8}STORAGE ${hr 2}
+${font}/ ${alignr}${fs_used /} / ${fs_size /}
+Usage: ${alignr}${fs_used_perc /}% ${fs_bar 8,120 /}
+Disk I/O Read: ${alignr}${diskio_read} ${diskiograph_read 8,120}
+Disk I/O Write: ${alignr}${diskio_write} ${diskiograph_write 8,120}
+
 #-----Network Information-----
+#Ethernet device: enp3s0. Wireless devices: wlo1 and wlx6c60eb667cc7. Change with yours.
 ${font sans-serif:bold:size=8}NETWORK ${hr 2}
-#-----Detect WLAN Connectivity-----
-#Wireless device: wlo1 and wlx6c60eb667cc7. Change with yours
-${if_existing /proc/net/route wlo1}${font}Connection: $alignr WLAN
-WLAN Device: $alignr wlo1
-Local IP: $alignr ${addr wlo1}
-ESSID: $alignr ${wireless_essid wlo1}
+${if_existing /proc/net/route wlo1}${font}Connection: ${alignr}WLAN, Device: wlo1
+Local IP: ${alignr}${addr wlo1}
+ESSID: ${alignr}${wireless_essid wlo1}
 AP's MAC Address: ${alignr}${wireless_ap wlo1}
 Wireless Bitrate: ${alignr}${wireless_bitrate wlo1}
 Signal Quality: ${alignr}${wireless_link_qual wlo1}% ${wireless_link_bar 8,120 wlo1}
-Connections: $alignr Inbound:${tcp_portmon 1 32767 count}, Outbound:${tcp_portmon 32768 61000 count}, Total:${tcp_portmon 1 65535 count}
-Public IP: $alignr ${execi 600 wget http://ipinfo.io/ip -qO -}
-ISP: $alignr ${execi 6000 curl ipinfo.io/org}
-Locale: $alignr ${execi 6000 curl ipinfo.io/city}, ${execi 6000 curl ipinfo.io/region}, ${execi 6000 curl ipinfo.io/country}
 UL Speed: ${alignr}${upspeed wlo1}/s ${upspeedgraph wlo1 8,120}
 DL Speed: ${alignr}${downspeed wlo1}/s ${downspeedgraph wlo1 8,120}
 Total Upload: ${alignr}${totalup wlo1}
-Total Download: ${alignr}${totaldown wlo1}${endif}
-${if_existing /proc/net/route wlx6c60eb667cc7}${font}Connection: $alignr WLAN
-WLAN Device: $alignr wlx6c60eb667cc7
-Local IP: $alignr ${addr wlx6c60eb667cc7}
-ESSID: $alignr ${wireless_essid wlx6c60eb667cc7}
+Total Download: ${alignr}${totaldown wlo1}${endif}${if_existing /proc/net/route wlx6c60eb667cc7}${font}Connection: ${alignr}WLAN, Device: wlx6c60eb667cc7
+Local IP: ${alignr}${addr wlx6c60eb667cc7}
+ESSID: ${alignr}${wireless_essid wlx6c60eb667cc7}
 AP's MAC Address: ${alignr}${wireless_ap wlx6c60eb667cc7}
 Wireless Bitrate: ${alignr}${wireless_bitrate wlx6c60eb667cc7}
 Signal Quality: ${alignr}${wireless_link_qual wlx6c60eb667cc7}% ${wireless_link_bar 8,120 wlx6c60eb667cc7}
-Connections: $alignr Inbound:${tcp_portmon 1 32767 count}, Outbound:${tcp_portmon 32768 61000 count}, Total:${tcp_portmon 1 65535 count}
-Public IP: $alignr ${execi 600 wget http://ipinfo.io/ip -qO -}
-ISP: $alignr ${execi 6000 curl ipinfo.io/org}
-Locale: $alignr ${execi 6000 curl ipinfo.io/city}, ${execi 6000 curl ipinfo.io/region}, ${execi 6000 curl ipinfo.io/country}
 UL Speed: ${alignr}${upspeed wlx6c60eb667cc7}/s ${upspeedgraph wlx6c60eb667cc7 8,120}
 DL Speed: ${alignr}${downspeed wlx6c60eb667cc7}/s ${downspeedgraph wlx6c60eb667cc7 8,120}
 Total Upload: ${alignr}${totalup wlx6c60eb667cc7}
-Total Download: ${alignr}${totaldown wlx6c60eb667cc7}${endif}
-
-#-----Detect Ethernet Connectivity-----
-#Ethernet device: enp3s0. Change with yours
-${if_existing /proc/net/route enp3s0}${font}Connection: $alignr Ethernet
-Ethernet Device: $alignr enp3s0
-Local IP: $alignr ${addr enp3s0}
-Connections: $alignr Inbound:${tcp_portmon 1 32767 count}, Outbound:${tcp_portmon 32768 61000 count}, Total:${tcp_portmon 1 65535 count}
-Public IP: $alignr ${execi 600 wget http://ipinfo.io/ip -qO -}
-ISP: $alignr ${execi 6000 curl ipinfo.io/org}
-Locale: $alignr ${execi 6000 curl ipinfo.io/city}, ${execi 6000 curl ipinfo.io/region}, ${execi 6000 curl ipinfo.io/country}
+Total Download: ${alignr}${totaldown wlx6c60eb667cc7}${endif}${if_existing /proc/net/route enp3s0}${font}Connection: ${alignr}Ethernet, Device: enp3s0
+Local IP: ${alignr}${addr enp3s0}
 UL Speed: ${alignr}${upspeedgraph enp3s0 8,120} ${upspeed enp3s0}/s
 DL Speed: ${alignr}${downspeedgraph enp3s0 8,120}${downspeed enp3s0}/s
 Total Upload: ${alignr}${totalup enp3s0}
 Total Download: ${alignr}${totaldown enp3s0}${endif}
+Public IP: ${alignr}${execi 600 wget http://ipinfo.io/ip -qO -}
+Location: ${alignr}[${execi 600 curl ipinfo.io/loc}], ${execi 600 curl ipinfo.io/city}, ${execi 600 curl ipinfo.io/country}
+ISP: ${alignr}${execi 600 curl ipinfo.io/org}
+Connections: ${alignr}Inbound:${tcp_portmon 1 32767 count}, Outbound:${tcp_portmon 32768 61000 count}, Total:${tcp_portmon 1 65535 count}
 #-----End of the script. Written by hyperpostulate.-----
 ]];
